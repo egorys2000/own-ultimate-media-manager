@@ -1,0 +1,3 @@
+# Ultimate Media Manager Dependencies
+# YouTube video/audio downloader
+yt-dlp==2025.5.22
