@@ -1,3 +1,5 @@
 # Ultimate Media Manager Dependencies
 # YouTube video/audio downloader
-yt-dlp==2025.5.22
+# NOTE: pin at a recent version — YouTube breaks old yt-dlp releases
+# (2025.05.22 fails with "The page needs to be reloaded").
+yt-dlp>=2026.8.19

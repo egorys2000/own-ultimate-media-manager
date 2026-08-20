@@ -55,6 +55,7 @@ def embed_thumbnail_in_audio(audio_file_path, thumbnail_path, force_replace_thum
                     "-map", "0:a",             # Map only audio from first input
                     "-map", "1:v",             # Map thumbnail from second input
                     "-c:a", "copy",            # Copy audio without re-encoding
+                    "-map_metadata", "0",      # Keep title/artist/album tags
                 ]
         else:
             print(f"  → Adding new thumbnail...")
@@ -66,6 +67,7 @@ def embed_thumbnail_in_audio(audio_file_path, thumbnail_path, force_replace_thum
                 "-map", "0",               # Map all streams from first input
                 "-map", "1",               # Map thumbnail from second input
                 "-c:a", "copy",            # Copy audio without re-encoding
+                "-map_metadata", "0",      # Keep title/artist/album tags
             ]
 
         # Format-specific video codec settings
@@ -79,6 +81,10 @@ def embed_thumbnail_in_audio(audio_file_path, thumbnail_path, force_replace_thum
             cmd.extend(["-c:v", "mjpeg"])
         else:
             cmd.extend(["-c:v", "mjpeg"])
+
+        # Standard cover-art stream tags so players/Telegram show the art
+        cmd.extend(["-metadata:s:v:0", "title=Album cover",
+                    "-metadata:s:v:0", "comment=Cover (front)"])
 
         cmd.extend(["-y", str(temp_output)])  # Overwrite output file
 
