@@ -33,9 +33,11 @@ def convert_to_mp3(folder):
         mp3 = audio.with_suffix(".mp3")
         cmd = [
             "ffmpeg", "-y", "-v", "quiet",
-            "-i", str(audio), "-map", "0",
+            "-i", str(audio), "-map", "0:a", "-map", "0:v",
             "-c:a", "libmp3lame", "-b:a", "192k",
-            "-c:v", "mjpeg", "-id3v2_version", "3",
+            "-c:v", "mjpeg",
+            "-vf", "crop='min(iw,ih)':'min(iw,ih)'",   # square cover (Telegram)
+            "-id3v2_version", "3",
             "-metadata:s:v", "title=Album cover",
             "-metadata:s:v", "comment=Cover (front)",
             str(mp3),
